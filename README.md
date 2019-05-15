@@ -1,10 +1,8 @@
-# fast-on-load
+# `fast-on-load`
 
-Faster and simplified version of [on-load](https://github.com/shama/on-load) without dom diffing support.
+[![Build Status](https://travis-ci.org/hyperdivision/fast-on-load.svg?branch=master)](https://travis-ci.org/hyperdivision/fast-on-load)
 
-```
-npm install fast-on-load
-```
+> Faster and simplified version of [on-load](https://github.com/shama/on-load) without dom diffing support.
 
 ## Usage
 
@@ -20,6 +18,19 @@ onload(domElement, function () {
 
 Uses a MutationObserver and a generated class together with `getElementsByClassName()` to find DOM nodes that on-load is tracking, which performs
 much faster (around 1000x in our machines) on bigger DOM trees that the tree traversal algo `on-load` uses.
+
+## API
+
+`const node = onload(node, [onload], [onunload])`
+
+Watch `node`, optionally passing `onload` and `onunload` handler.
+Returns the node itself.
+
+## Install
+
+```sh
+npm install fast-on-load
+```
 
 ## License
 
