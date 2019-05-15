@@ -1,0 +1,27 @@
+{
+  "name": "fast-on-load",
+  "version": "0.0.0",
+  "description": "Faster and simplified version of on-load without dom diffing support",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "standard": "^12.0.1",
+    "tape": "^4.10.1",
+    "tape-run": "^6.0.0",
+    "yo-yo": "^1.4.1"
+  },
+  "scripts": {
+    "test": "standard && browserify test.js | tape-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyperdivision/fast-on-load.git"
+  },
+  "author": "Hyperdivision ApS (opensource@hyperdivision.dk)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hyperdivision/fast-on-load/issues"
+  },
+  "homepage": "https://github.com/hyperdivision/fast-on-load"
+}
