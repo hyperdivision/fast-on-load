@@ -16,7 +16,7 @@ observer.observe(document.documentElement, {
 module.exports = function onload (node, onload, offload) {
   off = false
   node.classList.add(clz)
-  tracking.set(node, [ onload || noop, offload || noop, 2, 2 ])
+  tracking.set(node, [ onload || noop, offload || noop, 2 ])
   return node
 }
 
