@@ -1,9 +1,20 @@
 sudo: false
 language: node_js
+dist: xenial
 node_js:
   - lts/*
+addons:
+  apt:
+    packages:
+      - xvfb
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - npm i
 jobs:
   include:
+    - stage: test
+      script: npm test
     - stage: npm release
       node_js: node
       script: echo "Deploying to npm ..."
