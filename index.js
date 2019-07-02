@@ -16,8 +16,17 @@ observer.observe(document.documentElement, {
 module.exports = function onload (node, onload, offload) {
   off = false
   node.classList.add(clz)
-  tracking.set(node, [ onload || noop, offload || noop, 2 ])
+  const set = upsert(node)
+  set.add([ onload || noop, offload || noop, 2 ])
   return node
+}
+
+function upsert (node) {
+  const set = tracking.get(node)
+  if (set) return set
+  const n = new Set()
+  tracking.set(node, n)
+  return n
 }
 
 function noop () { }
@@ -32,14 +41,15 @@ function callAll (nodes, idx, target) {
 }
 
 function call (node, state, target) {
-  const ls = tracking.get(node)
-  if (ls[2] === state) return
-  if (state === 0 && isConnected(node)) {
-    ls[2] = 0
-    ls[0](node, target)
-  } else if (state === 1 && !isConnected(node)) {
-    ls[2] = 1
-    ls[1](node, target)
+  for (const ls of tracking.get(node)) {
+    if (ls[2] === state) continue
+    if (state === 0 && isConnected(node)) {
+      ls[2] = 0
+      ls[0](node, target)
+    } else if (state === 1 && !isConnected(node)) {
+      ls[2] = 1
+      ls[1](node, target)
+    }
   }
 }
 
