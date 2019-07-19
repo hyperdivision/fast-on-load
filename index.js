@@ -13,12 +13,25 @@ observer.observe(document.documentElement, {
   subtree: true
 })
 
-module.exports = function onload (node, onload, offload) {
+module.exports = onload
+function onload (node, onload, offload) {
   off = false
   node.classList.add(clz)
   const set = upsert(node)
   set.add([ onload || noop, offload || noop, 2 ])
   return node
+}
+
+onload.delete = function (node, onload = noop, offload = noop) {
+  const set = tracking.get(node)
+  if (!set) return false
+  for (const ls of set) {
+    if (ls[0] === onload && ls[1] === offload) {
+      set.delete(ls)
+      return true
+    }
+  }
+  return false
 }
 
 function upsert (node) {
@@ -40,6 +53,10 @@ function callAll (nodes, idx, target) {
   }
 }
 
+// State Enum
+// 0: mounted
+// 1: unmounted
+// 2: undefined
 function call (node, state, target) {
   for (const ls of tracking.get(node)) {
     if (ls[2] === state) continue

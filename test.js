@@ -222,6 +222,24 @@ test('operates with memoized elements', function (t) {
   }, 100)
 })
 
+test('onload.delete works', function (t) {
+  var el = document.createElement('div')
+  el.textContent = 'test'
+  function loadFunction () {
+    t.pass('Load function should be called')
+    onload.delete(el, loadFunction, unloadFunction)
+    setTimeout(() => {
+      t.end()
+    }, 200)
+    document.body.removeChild(el)
+  }
+  function unloadFunction () {
+    t.fail('Unload function should not be called')
+  }
+  onload(el, loadFunction, unloadFunction)
+  document.body.appendChild(el)
+})
+
 function runops (ops, done) {
   function loop () {
     var next = ops.shift()
