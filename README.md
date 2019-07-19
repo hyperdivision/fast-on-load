@@ -26,6 +26,10 @@ much faster (around 1000x in our machines) on bigger DOM trees that the tree tra
 Watch `node`, optionally passing `onload` and `onunload` handler.
 Returns the node itself.
 
+`onload.delete(node, [onload], [onunload])`
+
+Pass in references to the `onload` and `onunload` functions and the node they are attached to to remove them from the function set that get run on load and unload.  Pass `undefined` for `onload` if you only attached and `onunload` function.
+
 ## Install
 
 ```sh
