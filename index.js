@@ -58,7 +58,9 @@ function callAll (nodes, idx, target) {
 // 1: unmounted
 // 2: undefined
 function call (node, state, target) {
-  for (const ls of tracking.get(node)) {
+  const set = tracking.get(node)
+  if (!set) return
+  for (const ls of set) {
     if (ls[2] === state) continue
     if (state === 0 && isConnected(node)) {
       ls[2] = 0
