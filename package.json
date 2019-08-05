@@ -1,6 +1,6 @@
 {
   "name": "fast-on-load",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Faster and simplified version of on-load without dom diffing support",
   "main": "index.js",
   "dependencies": {},
