@@ -262,7 +262,9 @@ test('benchmark', function (t) {
   var fragment = document.createDocumentFragment()
   var container = document.createElement('div')
   container.id = 'benchmark container'
-  // ~346ms Warm Chrome 76 macOS for 100000
+  // ~346ms fast-on-load Warm Chrome 76 macOS for 100000 nodes
+  // ~1175ms from 'disconnected' for 100000 nodes
+  // crashes on-load for 100000 nodes
   var nodesToOnload = 100000
   var loaded = 0
   var timeStart
