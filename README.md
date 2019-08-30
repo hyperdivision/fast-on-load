@@ -30,6 +30,10 @@ Returns the node itself.
 
 Pass in references to the `onload` and `onunload` functions and the node they are attached to to remove them from the function set that get run on load and unload.  Pass `undefined` for `onload` if you only attached and `onunload` function.
 
+`onload = onload.bind(dom.window)`
+
+To run in non-dom context, such as [jsdom](https://ghub.io/jsdom), call `onload` with desired `window` context.
+
 ## Install
 
 ```sh
