@@ -281,10 +281,10 @@ test('benchmark', function (t) {
     }, () => {
       loaded--
       if (loaded === 0) {
-        t.end()
         console.timeEnd('onload benchmark')
         timeEnd = window.performance.now()
         t.pass(`~${timeEnd - timeStart}ms`)
+        t.end()
       }
     })
     fragment.appendChild(el)
