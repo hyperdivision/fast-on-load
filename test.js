@@ -240,6 +240,42 @@ test('onload.delete works', function (t) {
   document.body.appendChild(el)
 })
 
+test('benchmark', function (t) {
+  var fragment = document.createDocumentFragment()
+  var container = document.createElement('div')
+  container.id = 'benchmark container'
+  // ~346ms Warm Chrome 76 macOS for 100000
+  var nodesToOnload = 100000
+  var loaded = 0
+  var timeStart
+  var timeEnd
+
+  for (var i = 0; i < nodesToOnload; i++) {
+    const el = document.createElement('div')
+    el.textContent = `el ${i}`
+    onload(el, () => {
+      loaded++
+      if (loaded === nodesToOnload) {
+        document.body.removeChild(container)
+      }
+    }, () => {
+      loaded--
+      if (loaded === 0) {
+        t.end()
+        console.timeEnd('onload benchmark')
+        timeEnd = window.performance.now()
+        t.pass(`~${timeEnd - timeStart}ms`)
+      }
+    })
+    fragment.appendChild(el)
+  }
+
+  timeStart = window.performance.now()
+  document.body.appendChild(container)
+  console.time('onload benchmark')
+  container.appendChild(fragment)
+})
+
 function runops (ops, done) {
   function loop () {
     var next = ops.shift()
