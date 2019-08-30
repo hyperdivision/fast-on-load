@@ -12,7 +12,7 @@ function onload (node, onload, offload) {
   }
   const set = tracking.get(node)
 
-  set.add([ onload || noop, offload || noop, 2 ])
+  set.add([onload || noop, offload || noop, 2])
   return node
 }
 
