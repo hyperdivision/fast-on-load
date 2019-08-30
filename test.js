@@ -1,6 +1,7 @@
 var onload = require('./')
 var test = require('tape')
 var yo = require('yo-yo')
+var JSDOM = require('jsdom').JSDOM
 
 test('onload/onunload', function (t) {
   t.plan(2)
@@ -237,6 +238,23 @@ test('onload.delete works', function (t) {
     t.fail('Unload function should not be called')
   }
   onload(el, loadFunction, unloadFunction)
+  document.body.appendChild(el)
+})
+
+test('external document', function (t) {
+  var dom = new JSDOM('<!doctype html>')
+  var window = dom.window
+  var document = window.document
+  var el = document.createElement('div')
+
+  onload.call(window, el, function () {
+    t.ok(true, 'onload called')
+    document.body.removeChild(el)
+  }, function () {
+    t.ok(true, 'onunload called')
+    document.body.innerHTML = ''
+    t.end()
+  })
   document.body.appendChild(el)
 })
 
